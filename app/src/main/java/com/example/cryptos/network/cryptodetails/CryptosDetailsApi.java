@@ -7,7 +7,7 @@ public class CryptosDetailsApi {
 
     public CryptosDetailsApiService createCryptosDetailsApiService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.coinpaprika.com/v1/coins/")
+                .baseUrl("https://api.coinpaprika.com/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CryptosDetailsApiService cryptosDetailsApiService = retrofit.create(CryptosDetailsApiService.class);

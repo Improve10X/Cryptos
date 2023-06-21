@@ -3,8 +3,11 @@ package com.example.cryptos.cryptocoins;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.cryptos.cryptodetails.CryptoDetailsActivity;
+import com.example.cryptos.cryptodetails.OnItemActionListener;
 import com.example.cryptos.databinding.ActivityCryptosBinding;
 import com.example.cryptos.model.cryptoncoin.CryptoCoin;
 import com.example.cryptos.network.cryptocoin.CryptosApi;
@@ -59,5 +62,17 @@ public class CryptosActivity extends AppCompatActivity {
     private void setupAdapter() {
         cryptosAdapter = new CryptosAdapter();
         cryptosAdapter.setCryptosList(cryptoCoins);
+        cryptosAdapter.setOnItemActionListener(new OnItemActionListener() {
+            @Override
+            public void onClick(String id) {
+                handleItemClick(id);
+            }
+        });
+    }
+
+    private void handleItemClick(String id) {
+        Intent intent = new Intent(this, CryptoDetailsActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 }

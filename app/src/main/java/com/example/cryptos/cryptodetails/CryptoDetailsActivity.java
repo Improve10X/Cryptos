@@ -3,6 +3,7 @@ package com.example.cryptos.cryptodetails;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.cryptos.R;
@@ -22,14 +23,19 @@ import retrofit2.Response;
 public class CryptoDetailsActivity extends AppCompatActivity {
 
     private ActivityCryptoDetailsBinding binding;
-    private ArrayList<Tag> tags;
+    private ArrayList<Tag> tags = new ArrayList<>();
     private CryptosDetailsAdapter cryptosDetailsAdapter;
+
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCryptoDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        if (getIntent().hasExtra("id")) {
+            id = getIntent().getStringExtra("id");
+        }
         getCryptosDetails();
         setupAdapter();
         setupRv();
@@ -38,12 +44,13 @@ public class CryptoDetailsActivity extends AppCompatActivity {
     private void getCryptosDetails() {
         CryptosDetailsApi cryptosDetailsApi = new CryptosDetailsApi();
         CryptosDetailsApiService cryptosDetailsApiService = cryptosDetailsApi.createCryptosDetailsApiService();
-        Call<CryptoCoinDetails> call = cryptosDetailsApiService.getCryptoDetails();
+        Call<CryptoCoinDetails> call = cryptosDetailsApiService.getCryptoDetails(id);
         call.enqueue(new Callback<CryptoCoinDetails>() {
             @Override
             public void onResponse(Call<CryptoCoinDetails> call, Response<CryptoCoinDetails> response) {
                 CryptoCoinDetails cryptoCoinDetailsCall = response.body();
                 cryptosDetailsAdapter.setCryptoCoinDetails(cryptoCoinDetailsCall.getTags());
+                binding.setCryptoDetails(cryptoCoinDetailsCall);
             }
 
             @Override

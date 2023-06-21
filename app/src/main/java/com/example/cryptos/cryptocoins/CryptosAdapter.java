@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cryptos.cryptodetails.OnItemActionListener;
 import com.example.cryptos.databinding.CryptosItemBinding;
 import com.example.cryptos.model.cryptoncoin.CryptoCoin;
 
@@ -15,8 +16,15 @@ public class CryptosAdapter extends RecyclerView.Adapter<CryptoViewHolder> {
 
     private List<CryptoCoin> cryptoCoinList;
 
+    private OnItemActionListener onItemActionListener;
+
     void setCryptosList(List<CryptoCoin> cryptoCoinList) {
         this.cryptoCoinList = cryptoCoinList;
+        notifyDataSetChanged();
+    }
+
+    void setOnItemActionListener(OnItemActionListener onItemActionListener) {
+        this.onItemActionListener = onItemActionListener;
         notifyDataSetChanged();
     }
 
@@ -32,6 +40,9 @@ public class CryptosAdapter extends RecyclerView.Adapter<CryptoViewHolder> {
     public void onBindViewHolder(@NonNull CryptoViewHolder holder, int position) {
         CryptoCoin cryptoCoin = cryptoCoinList.get(position);
         holder.binding.setCryptoCoin(cryptoCoin);
+        holder.binding.getRoot().setOnClickListener(v -> {
+            onItemActionListener.onClick(cryptoCoin.getId());
+        });
     }
 
     @Override

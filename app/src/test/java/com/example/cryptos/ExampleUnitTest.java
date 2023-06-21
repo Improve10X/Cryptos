@@ -42,7 +42,7 @@ public class ExampleUnitTest {
     public void getCryptosDetails() throws IOException {
         CryptosDetailsApi cryptosDetailsApi = new CryptosDetailsApi();
         CryptosDetailsApiService cryptosDetailsApiService = cryptosDetailsApi.createCryptosDetailsApiService();
-        Call<CryptoCoinDetails> call = cryptosDetailsApiService.getCryptoDetails();
+        Call<CryptoCoinDetails> call = cryptosDetailsApiService.getCryptoDetails("eth-ethereum");
         CryptoCoinDetails cryptoCoinDetails = call.execute().body();
         assertNotNull(cryptoCoinDetails);
         System.out.println(new Gson().toJson(cryptoCoinDetails));

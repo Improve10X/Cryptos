@@ -4,9 +4,10 @@ import com.example.cryptos.model.cryptodetails.CryptoCoinDetails;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface CryptosDetailsApiService {
 
-    @GET("btc-bitcoin")
-    Call<CryptoCoinDetails> getCryptoDetails();
+    @GET("coins/{id}")
+    Call<CryptoCoinDetails> getCryptoDetails(@Path("id") String id);
 }
