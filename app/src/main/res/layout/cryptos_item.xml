@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="cryptoCoin"
-            type="com.example.cryptos.CryptoCoin" />
+            type="com.example.cryptos.model.cryptoncoin.CryptoCoin" />
         <variable
             name="active"
             type="Boolean" />

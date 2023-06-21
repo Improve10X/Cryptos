@@ -1,4 +1,4 @@
-package com.example.cryptos;
+package com.example.cryptos.cryptocoins;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cryptos.databinding.CryptosItemBinding;
+import com.example.cryptos.model.cryptoncoin.CryptoCoin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CryptosAdapter extends RecyclerView.Adapter<CryptoViewHolder> {

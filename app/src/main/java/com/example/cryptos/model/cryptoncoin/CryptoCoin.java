@@ -1,4 +1,4 @@
-package com.example.cryptos;
+package com.example.cryptos.model.cryptoncoin;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package com.example.cryptos;
+package com.example.cryptos.cryptocoins;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.os.Bundle;
 
 import com.example.cryptos.databinding.ActivityCryptosBinding;
+import com.example.cryptos.model.cryptoncoin.CryptoCoin;
+import com.example.cryptos.network.cryptocoin.CryptosApi;
+import com.example.cryptos.network.cryptocoin.CryptosApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +44,6 @@ public class CryptosActivity extends AppCompatActivity {
                 List<CryptoCoin> coins = response.body();
                 cryptosAdapter.setCryptosList(coins);
             }
-
             @Override
             public void onFailure(Call<List<CryptoCoin>> call, Throwable t) {
 

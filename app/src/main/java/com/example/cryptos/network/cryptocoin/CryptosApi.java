@@ -1,4 +1,4 @@
-package com.example.cryptos;
+package com.example.cryptos.network.cryptocoin;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

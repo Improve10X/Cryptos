@@ -1,4 +1,6 @@
-package com.example.cryptos;
+package com.example.cryptos.network.cryptocoin;
+
+import com.example.cryptos.model.cryptoncoin.CryptoCoin;
 
 import java.util.List;
 
