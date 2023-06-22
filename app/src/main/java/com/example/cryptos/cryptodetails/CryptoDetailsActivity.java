@@ -2,14 +2,14 @@ package com.example.cryptos.cryptodetails;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.cryptos.R;
 import com.example.cryptos.databinding.ActivityCryptoDetailsBinding;
 import com.example.cryptos.model.cryptodetails.CryptoCoinDetails;
 import com.example.cryptos.model.cryptodetails.Tag;
+import com.example.cryptos.model.cryptodetails.Team;
 import com.example.cryptos.network.cryptodetails.CryptosDetailsApi;
 import com.example.cryptos.network.cryptodetails.CryptosDetailsApiService;
 
@@ -25,7 +25,8 @@ public class CryptoDetailsActivity extends AppCompatActivity {
     private ActivityCryptoDetailsBinding binding;
     private ArrayList<Tag> tags = new ArrayList<>();
     private CryptosDetailsAdapter cryptosDetailsAdapter;
-
+    private CryptosTeamMembersAdapter cryptosTeamMembersAdapter;
+    private ArrayList<Team> teams = new ArrayList<>();
     private String id;
 
     @Override
@@ -36,9 +37,12 @@ public class CryptoDetailsActivity extends AppCompatActivity {
         if (getIntent().hasExtra("id")) {
             id = getIntent().getStringExtra("id");
         }
+        getTeamMembers();
         getCryptosDetails();
         setupAdapter();
+        setupTeamMemberAdapter();
         setupRv();
+        teamMemberRv();
     }
 
     private void getCryptosDetails() {
@@ -60,6 +64,23 @@ public class CryptoDetailsActivity extends AppCompatActivity {
         });
     }
 
+    private void getTeamMembers() {
+        CryptosDetailsApi cryptosDetailsApi = new CryptosDetailsApi();
+        CryptosDetailsApiService cryptosDetailsApiService = cryptosDetailsApi.createCryptosDetailsApiService();
+        Call<CryptoCoinDetails> call = cryptosDetailsApiService.getCryptoDetails(id);
+        call.enqueue(new Callback<CryptoCoinDetails>() {
+            @Override
+            public void onResponse(Call<CryptoCoinDetails> call, Response<CryptoCoinDetails> response) {
+                List<Team> teamList = response.body().getTeams();
+                cryptosTeamMembersAdapter.setTeams(teamList);
+            }
+
+            @Override
+            public void onFailure(Call<CryptoCoinDetails> call, Throwable t) {
+            }
+        });
+    }
+
     private void setupRv() {
         binding.cryptoDetailsRv.setLayoutManager(new GridLayoutManager(this, 3));
         binding.cryptoDetailsRv.setAdapter(cryptosDetailsAdapter);
@@ -68,5 +89,15 @@ public class CryptoDetailsActivity extends AppCompatActivity {
     private void setupAdapter() {
         cryptosDetailsAdapter = new CryptosDetailsAdapter();
         cryptosDetailsAdapter.setCryptoCoinDetails(tags);
+    }
+
+    private void setupTeamMemberAdapter() {
+        cryptosTeamMembersAdapter = new CryptosTeamMembersAdapter();
+        cryptosTeamMembersAdapter.setTeams(teams);
+    }
+
+    private void teamMemberRv() {
+        binding.teamMemberRv.setLayoutManager(new LinearLayoutManager(this));
+        binding.teamMemberRv.setAdapter(cryptosTeamMembersAdapter);
     }
 }
